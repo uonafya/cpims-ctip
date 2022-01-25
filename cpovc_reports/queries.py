@@ -1420,26 +1420,40 @@ select ocr.person_id as cpims_id,
 CASE rp.sex_id WHEN 'SFEM' THEN 'Female' ELSE 'Male' END AS sex,
 date_part('year', age(ocr.date_case_opened, rp.date_of_birth)) AS age,
 CASE
-WHEN  date_part('year', age(ocr.date_case_opened, rp.date_of_birth)) < 6 THEN 'a.[0 - 5 yrs]'
-WHEN  date_part('year', age(ocr.date_case_opened, rp.date_of_birth)) BETWEEN 6 AND 9 THEN 'b.[6 - 9 yrs]' 
-WHEN  date_part('year', age(ocr.date_case_opened, rp.date_of_birth)) BETWEEN 10 AND 15 THEN 'c.[10 - 15 yrs]' 
-WHEN  date_part('year', age(ocr.date_case_opened, rp.date_of_birth)) BETWEEN 16 AND 18 THEN 'd.[16 - 18 yrs]' 
+WHEN  date_part('year', age(date_case_opened, rp.date_of_birth)) < 6 THEN 'a.[0 - 5 yrs]'
+WHEN  date_part('year', age(date_case_opened, rp.date_of_birth)) BETWEEN 6 AND 9 THEN 'b.[6 - 9 yrs]' 
+WHEN  date_part('year', age(date_case_opened, rp.date_of_birth)) BETWEEN 10 AND 15 THEN 'c.[10 - 15 yrs]' 
+WHEN  date_part('year', age(date_case_opened, rp.date_of_birth)) BETWEEN 16 AND 18 THEN 'd.[16 - 18 yrs]' 
 ELSE 'e.[18+ yrs]' END AS agerange,
 TO_CHAR(ocr.date_case_opened :: DATE, 'dd-Mon-yyyy') as case_date,
 to_char(ocr.date_case_opened, 'YYYY')::INTEGER as "case_year",
 TO_CHAR(ocr.date_case_opened :: DATE, 'MM-Mon') as "case_month",
-ccat.case_category as case_category_id, c_cat.item_description as "case category",
+c_cat.item_description as case_category,
 string_agg(cs_cat.item_description, ',') as case_sub_categories,
+CASE ocr.case_stage WHEN 2 THEN 'Closed' WHEN 1 THEN 'Active' ELSE 'Pending' END AS Case_status,
+ous.item_description as org_unit_type, ou.org_unit_name as org_unit,
+cou_geo.area_name as county, scou_geo.area_name as sub_county,
+CASE cen.service_provided WHEN cen.service_provided THEN intv.item_description ELSE 'Case Open' END AS intervention,
+TO_CHAR(ocr.timestamp_created :: DATE, 'dd-Mon-yyyy') as system_date,
 1 as ovccount
 from ovc_case_record ocr
 inner join ovc_case_category as ccat on case_id = ccat.case_id_id
 inner join ovc_case_geo as cgeo on cgeo.case_id_id = case_id
 inner join ovc_medical as omed on omed.case_id_id = case_id
 left outer join reg_person rp on ocr.person_id=rp.id
-left outer join reg_org_unit on reg_org_unit.id=cgeo.report_orgunit_id
+left outer join list_geo as scou_geo on scou_geo.area_id=cgeo.report_subcounty_id and scou_geo.area_id > 47
+left outer join list_geo as cou_geo on cou_geo.area_id=scou_geo.parent_area_id and cou_geo.area_id < 48
+left outer join reg_org_unit as ou on ou.id=cgeo.report_orgunit_id
 left outer join ovc_case_sub_category ocsc on ocsc.case_category_id = ccat.case_category_id
 left outer join list_general c_cat on c_cat.item_id=ccat.case_category and c_cat.field_name = 'case_category_id'
 inner join list_general cs_cat on cs_cat.item_id=ocsc.sub_category_id
-group by ocr.person_id, ocr.date_case_opened, ccat.case_category, rp.sex_id,
-rp.date_of_birth, c_cat.item_description;
+left join ovc_case_events as cev on cev.case_id_id = case_id and cev.case_event_type_id = 'CLOSURE' and cev.is_void = false
+left join ovc_case_event_encounters as cen on cen.case_event_id_id=cev.case_event_id
+left outer join list_general intv on intv.item_id=cen.service_provided and intv.field_name = 'intervention_id'
+left outer join list_general ous on ous.item_id=ou.org_unit_type_id
+where date_case_opened between '{start_date}' and '{end_date}'
+group by ocr.person_id, ocr.date_case_opened, rp.sex_id, ous.item_description,
+rp.date_of_birth, c_cat.item_description, ou.org_unit_name,
+scou_geo.area_name, cou_geo.area_name, ocr.case_stage, ocr.timestamp_created,
+cen.service_provided, intv.item_description
 '''
