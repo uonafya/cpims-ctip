@@ -1,0 +1,6 @@
+cpims_id,sex,age,case_date,case_year,case_month,case_category_id,case category,case_sub_categories,ovccount
+49,Male,1.0,01-Sep-2021,2021,09-Sep,CDIS,Abandoned,Abandoned,1
+50,Female,11.0,14-Jan-2022,2022,01-Jan,CDIS,Abandoned,Abandoned,1
+51,Female,11.0,05-Nov-2021,2021,11-Nov,CSCS,FGM,FGM,1
+53,Male,0.0,13-Jan-2022,2022,01-Jan,CSIC,Neglect,"Education,Love and Attention,Basic Services (Food or Shelter or Water),Health Services,Freedom of Movement",1
+53,Male,0.0,13-Jan-2022,2022,01-Jan,CTRF,Child Labour,Begging,1
