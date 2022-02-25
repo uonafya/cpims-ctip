@@ -36,7 +36,7 @@
 			<li><a href="{% url 'forms_registry' %}">Follow-ups</a></li>
 			<li><a href="{% url 'documents_manager' %}">Documents Manager</a></li>
 			<li><a href="{% url 'ovc_home' %}">OVC Care</a></li>
-			<li><a href="#">Family Support</a></li>
+			<li><a href="#">Family Support / HES</a></li>
 			<li><a href="{% url 'ctip_home' %}">Trafficked Persons</a></li>
 		</ul>
 		
@@ -57,6 +57,16 @@
 		    <li><a href="{% url 'cpims_reports' id=5 %}">Ad Hoc Report </a></li>
 		    <li><a href="{% url 'pivot_reports' %}">Ad Hoc Pivot Report </a></li>
 		    <li><a href="{% url 'document_reports' %}">Document Templates </a></li>
+		    <li class="has-sub">
+				<a href="#">
+				    <b class="caret pull-right"></b>
+				    <i class="fa fa-align-left"></i> 
+				    <span>Alternative Care Reports</span>
+				</a>
+				<ul class="sub-menu">
+					<li><a href="#">Summary Report</a></li>
+				</ul>
+			</li>
 		    <li class="has-sub">
 				<a href="#">
 				    <b class="caret pull-right"></b>

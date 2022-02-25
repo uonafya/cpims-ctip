@@ -10,15 +10,17 @@ from cpovc_forms.functions import get_person_ids
 from .models import AFCMain, AFCEvents, AFCForms
 from .forms import (
     AltCareForm, AFCForm1A, AFCForm1B, AFCForm2A, AFCForm4A, AFCForm5A,
-    AFCForm7A, AFCForm8A, AFCForm9A)
+    AFCForm7A, AFCForm8A, AFCForm9A, AFCForm10A, AFCForm12A, AFCForm14A)
 from cpovc_registry.models import (
     RegPerson, RegPersonsSiblings, RegPersonsExternalIds, RegPersonsGeo)
 from cpovc_forms.models import OVCCaseRecord, OVCCaseCategory
 from cpovc_main.functions import get_dict
 from .functions import (
     handle_alt_care, save_altcare_form, get_area, get_class_levels,
-    get_education)
+    get_education, get_form_info)
 from .settings import FMS, CTS
+
+# from cpovc_ovc.decorators import validate_ovc
 
 
 @login_required
@@ -101,7 +103,8 @@ def view_alternative_care(request, case_id):
         cid = str(case.care_type)[2:]
         cname = CTS[cid] if cid in CTS else 'Adoption'
         check_fields = ['sex_id', 'case_category_id',
-                        'alternative_family_care_type_id']
+                        'alternative_family_care_type_id',
+                        'care_admission_reason_id']
         vals = get_dict(field_name=check_fields)
         # Events
         events = (AFCEvents.objects
@@ -110,12 +113,15 @@ def view_alternative_care(request, case_id):
                   .annotate(dcount=Count('form_id'))
                   .order_by()
                   )
+        # Common data
+        fdatas = get_form_info(request, case.pk, case.person_id, False)
         forms = {}
         for event in events:
             forms[str(event['form_id'])] = event['dcount']
         return render(request, 'afc/view_alternative_care.html',
                       {'status': 200, 'case': case, 'vals': vals,
-                       'cid': cid, 'care_name': cname, 'events': forms})
+                       'cid': cid, 'care_name': cname, 'events': forms,
+                       'fdatas': fdatas})
     except Exception as e:
         raise e
 
@@ -143,6 +149,11 @@ def edit_alternative_care(request, case_id):
         case_date = cdate.strftime('%d-%b-%Y')
         initial_info['care_option'] = case.care_type
         initial_info['case_date'] = case_date
+        # Get common elements
+        fdatas = get_form_info(request, case.pk, case.person_id, False)
+        if fdatas:
+            for fdt in fdatas:
+                initial_info[fdt] = fdatas[fdt]
         form = AltCareForm(initial=initial_info)
         cname = CTS[cid] if cid in CTS else 'Adoption'
         check_fields = ['sex_id', 'case_category_id',
@@ -235,12 +246,14 @@ def alt_care_form(request, cid, form_id, case_id, ev_id=0):
         form = get_form(form_id, idata)
         tmpl = 'afc/new_form_%s.html' % (form_id)
         case_uid = str(case_id).replace('-', '')
+        case_num = '%s/%s' % (str(case.case_number).zfill(6), 2022)
         return render(request, tmpl,
                       {'status': 200, 'case': case, 'form_id': form_id,
                        'form_name': form_name, 'vals': vals, 'geos': geos,
                        'form': form, 'case_id': case_uid, 'cid': cid,
                        'siblings': siblings, 'ext_ids': ext_ids,
-                       'levels': levels, 'sch_class': sch_class})
+                       'levels': levels, 'sch_class': sch_class,
+                       'case_num': case_num})
     except Exception as e:
         raise e
 
@@ -265,6 +278,12 @@ def get_form(form_id, initial_data):
             form = AFCForm8A(initial=initial_data)
         elif form_id == '9A':
             form = AFCForm9A(initial=initial_data)
+        elif form_id == '10A':
+            form = AFCForm10A(initial=initial_data)
+        elif form_id == '12A':
+            form = AFCForm12A(initial=initial_data)
+        elif form_id == '14A':
+            form = AFCForm14A(initial=initial_data)
     except Exception as e:
         raise e
     else:

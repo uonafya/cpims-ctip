@@ -53,7 +53,7 @@ form#new-form-b ul {
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                 </div>
-                <h4 class="panel-title">{{ form_name }}</h4>
+                <h4 class="panel-title">{{ case.care_type|gen_value:vals }} - {{ form_name }}</h4>
             </div>
             <div class="cinvoice">
                 <div class="invoice-company">
@@ -72,50 +72,96 @@ form#new-form-b ul {
                     <input type="hidden" name="person_id" value="{{ case.person.id }}">
                     <input type="hidden" name="care_id" value="{{ case.care_id }}">
                     <div class="form-group">
-                        <label class="col-md-3 control-label"> Names of Child</label>
-                        <div class="col-md-8">
+                        <label class="col-md-2 control-label">Child Names</label>
+                        <div class="col-md-3">
                             {{ case.person.first_name }} {{ case.person.surname }}
                         </div>
-                        <div class="col-md-1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"> Date of Birth</label>
-                        <div class="col-md-4">
-                            {{ case.person.date_of_birth }} ({{ case.person.age }})
-                        </div>
-                        <div class="col-md-4">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Consent Type</label>
-                        <div class="col-md-8">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Consent details</label>
-                        <div class="col-md-8">
-                            <p>** As indicated in the specific forms.</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Consent Provided</label>
-                        <div class="col-md-4">
-                            {{ form.qf3A1_rdo }}
-                            <span id="qf3A1_rdo_error"></span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Date</label>
-                        <div class="col-md-4">{{ form.event_date }}</div>
-                        <div class="col-md-4"></div>
+                        <label class="col-md-2 control-label">Sex</label>
+                        <div class="col-md-3">{{ case.person.sex_id|gen_value:vals }}</div>
+                        <div class="col-md-1"></div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
+                        <label class="col-md-2 control-label"> Date of Birth</label>
                         <div class="col-md-3">
-                            <button type="submit" class="btn btn-sm btn-success">Submit Consent details</button>
+                            {{ case.person.date_of_birth }}
+                        </div>
+                        <label class="col-md-2 control-label">Age</label>
+                        <div class="col-md-3">{{ case.person.age }}</div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Date of Referral</label>
+                        <div class="col-md-2">
+                            {{ form.event_date }}
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Reasons for referral</label>
+                        <div class="col-md-2">
+                            {{ form.qf9A1_rdo }}
+                            <span id="qf2A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Name of referring officer and contact</label>
+                        <div class="col-md-2">
+                            {{ form.qf9A1_rdo }}
+                            <span id="qf2A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Organization/body receiving the transfer</label>
+                        <div class="col-md-2">
+                            {{ form.qf9A1_rdo }}
+                            <span id="qf2A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">PARTICULARS OF THE CHILD/CHILDREN</label>
+                        <div class="col-md-2">
+                            {{ form.qf9A1_rdo }}
+                            <span id="qf2A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">DOCUMENTS ATTACHED</label>
+                        <div class="col-md-2">
+                            {{ form.qf9A1_rdo }}
+                            <span id="qf2A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+ 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Date of event</label>
+                        <div class="col-md-2">
+                            {{ form.event_date }}
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-sm btn-success">Submit Form {{ form_id }} details</button>
                         </div>
                     </div>
                 </form>
@@ -134,7 +180,7 @@ form#new-form-b ul {
 
 <script>
 $(document).ready(function() {
-    $('#event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
+    $('#event_date, .event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
 });
 
 </script>

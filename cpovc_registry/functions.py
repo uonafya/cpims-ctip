@@ -2122,7 +2122,7 @@ def get_admin_regs(request, did, start_date):
             boys = cts[mon]['boys']
             bgs = girls + boys
             bgs_fmt = '{:20,.0f}'.format(bgs)
-            year = cts[mon]['year']
+            # year = cts[mon]['year']
             name = '%s - %s' % (mon, year)
             tts.append("'%s - %s'" % (mon, year))
             gts.append(str(girls))

@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from cpovc_registry.models import RegPerson, RegOrgUnit
 from cpovc_forms.models import OVCCaseRecord
+from cpovc_auth.models import AppUser
 
 
 class AFCMain(models.Model):
@@ -19,12 +20,10 @@ class AFCMain(models.Model):
     case_status = models.NullBooleanField(null=True, default=None)
     case_stage = models.IntegerField(default=0)
     case_date = models.DateField()
-    cg_consent = models.BooleanField(default=False)
-    cg_consent_date = models.DateField(null=True, blank=True)
-    ovc_consent = models.BooleanField(default=False)
-    ovc_consent_date = models.DateField(null=True, blank=True)
+    created_by = models.ForeignKey(
+        AppUser, blank=True, on_delete=models.CASCADE)
     timestamp_created = models.DateTimeField(default=timezone.now)
-    timestamp_updated = models.DateTimeField(default=timezone.now)
+    timestamp_modified = models.DateTimeField(default=timezone.now)
     is_void = models.BooleanField(default=False)
 
     def _get_cases(self):
@@ -64,7 +63,10 @@ class AFCEvents(models.Model):
     event_date = models.DateField()
     form_id = models.CharField(max_length=3, blank=True)
     person = models.ForeignKey(RegPerson)
+    created_by = models.ForeignKey(
+        AppUser, blank=True, on_delete=models.CASCADE)
     timestamp_created = models.DateTimeField(default=timezone.now)
+    timestamp_modified = models.DateTimeField(default=timezone.now)
     is_void = models.BooleanField(default=False)
 
     class Meta:
@@ -85,6 +87,7 @@ class AFCForms(models.Model):
     item_value = models.CharField(max_length=5)
     item_detail = models.TextField(null=True, blank=True)
     timestamp_created = models.DateTimeField(default=timezone.now)
+    timestamp_modified = models.DateTimeField(default=timezone.now)
     is_void = models.BooleanField(default=False)
 
     class Meta:
@@ -95,3 +98,25 @@ class AFCForms(models.Model):
     def __unicode__(self):
         """To be returned by admin actions."""
         return '%s' % (str(self.event))
+
+
+class AFCInfo(models.Model):
+    info_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid1, editable=False)
+    care = models.ForeignKey(AFCMain, on_delete=models.CASCADE)
+    person = models.ForeignKey(RegPerson, on_delete=models.CASCADE)
+    item_id = models.CharField(max_length=12)
+    item_value = models.CharField(max_length=5)
+    item_detail = models.TextField(null=True, blank=True)
+    timestamp_created = models.DateTimeField(default=timezone.now)
+    timestamp_modified = models.DateTimeField(default=timezone.now)
+    is_void = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'ovc_afc_info'
+        verbose_name = 'AFC Form Info'
+        verbose_name_plural = 'AFC Forms Infos'
+
+    def __unicode__(self):
+        """To be returned by admin actions."""
+        return '%s' % (str(self.care))

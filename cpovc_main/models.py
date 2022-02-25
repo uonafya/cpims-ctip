@@ -148,7 +148,8 @@ class ListQuestions(models.Model):
     answer_type_id = models.CharField(max_length=4, null=True, blank=True)
     answer_set_id = models.IntegerField(db_index=True, null=True)
     the_order = models.IntegerField(db_index=True, null=True)
-    timestamp_modified = models.DateTimeField(auto_now=True, null=True)
+    timestamp_created = models.DateTimeField(auto_now=True, null=True)
+    timestamp_updated = models.DateTimeField(auto_now=True, null=True)
     is_void = models.BooleanField(default=False)
 
     class Meta:

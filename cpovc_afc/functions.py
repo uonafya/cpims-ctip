@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
+
 from cpovc_main.functions import convert_date
-from .models import AFCMain, AFCForms, AFCEvents
+from .models import AFCMain, AFCForms, AFCEvents, AFCInfo
 from cpovc_main.models import SetupGeography
 from cpovc_ovc.models import OVCEducation
 from cpovc_main.functions import get_dict
@@ -43,11 +45,40 @@ def save_alt_care(request, params):
         case_date = request.POST.get('case_date')
         care_type = request.POST.get('care_option')
         event_date = convert_date(case_date)
+        # Org unit and user
+        ou_id = request.session.get('ou_primary', 0)
+        org_unit_id = 1 if not ou_id else ou_id
+        user_id = request.user.id
         obj, created = AFCMain.objects.update_or_create(
-            case_id=case_id,
+            case_id=case_id, is_void=False,
             defaults={'case_date': event_date, 'care_type': care_type,
-                      'person_id': person_id, 'is_void': False},
+                      'person_id': person_id, 'org_unit_id': org_unit_id,
+                      'created_by_id': user_id},
         )
+        # Save other common fields
+        care_id = obj.pk
+        person_id = obj.person_id
+        ndatas = save_form_info(request, care_id, person_id, fm_pref='AFC_FM')
+        # Get original info for deleting diff changes
+        odatas = get_form_info(request, care_id, person_id, False)
+        old_ids = []
+        for ndt in ndatas:
+            if ndt in odatas:
+                odts = odatas[ndt]
+                ndts = ndatas[ndt]
+                for dv in odts:
+                    if dv in ndts:
+                        ndts.remove(dv)
+                    else:
+                        old_ids.append({dv: ndt})
+        # print('old_ids', old_ids)
+        for itms in old_ids:
+            for item_value in itms:
+                item_id = itms[item_value]
+                AFCInfo.objects.filter(care_id=care_id,
+                                       person_id=person_id,
+                                       item_id=item_id,
+                                       item_value=item_value).delete()
     except Exception as e:
         print('Error saving AFC %s' % (str(e)))
     else:
@@ -64,10 +95,11 @@ def save_altcare_form(request, form_id, ev_id=0):
         event_date = request.POST.get('event_date')
         lid = get_last_form(request, form_id)
         print('Last ID', lid)
+        user_id = request.user.id
         obj, created = AFCEvents.objects.update_or_create(
             case_id=case_id, form_id=form_id, care_id=care_id,
             defaults={'event_date': convert_date(event_date),
-                      'person_id': person_id})
+                      'person_id': person_id, 'created_by_id': user_id})
         event_id = obj.pk
         # Schoool details in some forms
         ecare = get_alt_care(request, case_id)
@@ -132,6 +164,51 @@ def save_form_data(request, form_id, event_id):
         print('Error saving TIP %s' % (str(e)))
     else:
         return True
+
+
+def save_form_info(request, care_id, person_id, fm_pref='AFC_FM'):
+    """Method to save form common elements."""
+    try:
+        all_itms = extract_params(request, fm_pref)
+        print('all_itms', all_itms)
+        now = timezone.now()
+        for itms in all_itms:
+            for itm in all_itms[itms]:
+                itdm = 'QTXT' if itms.endswith('_txt') else itm
+                itdl = itm if itms.endswith('_txt') else None
+                obj, created = AFCInfo.objects.update_or_create(
+                    care_id=care_id, person_id=person_id,
+                    item_id=itms, item_value=itdm,
+                    defaults={'item_detail': itdl, 'is_void': False,
+                              'timestamp_modified': now},
+                )
+    except Exception as e:
+        print('Save info error - %s' % (str(e)))
+        return {}
+    else:
+        return all_itms
+
+
+def get_form_info(request, care_id, person_id, raw=True, infos=[]):
+    """Method to get form infos."""
+    try:
+        fdatas = {}
+        form_infos = AFCInfo.objects.filter(
+            care_id=care_id, person_id=person_id)
+        for fm in form_infos:
+            item_id = fm.item_id
+            item_value = fm.item_value
+            if item_id not in fdatas:
+                fdatas[item_id] = [item_value]
+            else:
+                fdatas[item_id].append(item_value)
+    except Exception as e:
+        raise e
+    else:
+        if raw:
+            return form_infos
+        else:
+            return fdatas
 
 
 def extract_params(request, pref):
@@ -199,7 +276,7 @@ def get_class_levels():
                 c_lvl, c_nm = lvl.split(",")
                 new_cnm = vals[c_lvl] if c_lvl in vals else c_nm
                 n_lvl = "%s,%s" % (c_lvl, new_cnm)
-                # print(lvl, n_lvl)
+                print(lvl, n_lvl)
     except Exception as e:
         print('Error getting class levels - %s' % (str(e)))
         return {}

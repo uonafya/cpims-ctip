@@ -991,8 +991,8 @@ legend {
 /* 3.5 Component - Note Setting */
 
 .note {
-    margin-bottom: 20px;
-    padding: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
     border-left: 3px solid;
 }
 .note.note-success {

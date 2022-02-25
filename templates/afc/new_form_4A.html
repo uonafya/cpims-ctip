@@ -93,22 +93,8 @@ form#new-form-b ul {
                     <hr>
                     {% if cid == 'CA' %}
                     <!-- Adoption -->
-
-                    {% elif cid == 'FC' %}
-                    <!-- Foster Care -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Planned home visits for the emergency foster (within the one month)</label>
-                        <div class="col-md-2">
-                            {{ form.qf4A1_rdo }}
-                            <span id="qf4A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    {% endif %}
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Matching done(Y/N)</label>
+                        <label class="col-md-4 control-label">Matching done(Y/N) {{ cid }}</label>
                         <div class="col-md-2">
                             {{ form.qf4A1_rdo }}
                             <span id="qf4A1_rdo_error"></span>
@@ -127,34 +113,69 @@ form#new-form-b ul {
                         <div class="col-md-2"></div>
                         <div class="col-md-1"></div>
                     </div>
+
+                    {% elif cid == 'FC' %}
+                    <!-- Foster Care -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Planned home visits for the emergency foster (within the one month)</label>
+                        <div class="col-md-2">
+                            {{ form.qf4A1_rdo }}
+                            <span id="qf4A1_rdo_error"></span>
+                        </div>
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    {% endif %}
+                    
                     <fieldset>
                         <legend class="pull-left width-full">Goals By Domain</legend>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Are there signs of violence (including harsh physical punishment), abuse or neglect in the home?</label>
-                            <div class="col-md-2">
-                                {{ form.qf4A1_rdo }}
-                                <span id="qf2A1_rdo_error"></span>
-                            </div>
-                            <label class="col-md-2 control-label"></label>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-1"></div>
-                        </div>
-                    </fieldset>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Case Plan Date</label>
+                        <label class="col-md-2 control-label">Case Plan Date</label>
                         <div class="col-md-2">
                             {{ form.event_date }}
                         </div>
                         <div class="col-md-4"></div>
-                    </div>      
+                    </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2"><b>Domain</b></div>
+                            <div class="col-md-3"><b>Goals</b></div>
+                            <div class="col-md-3"><b>Needs</b></div>
+                            <div class="col-md-2"><b>Proposed actions</b></div>
+                            <div class="col-md-2"><b>Deadline</b></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">{{ form.qf4A1 }}</div>
+                            <div class="col-md-3">{{ form.qf4A2 }}</div>
+                            <div class="col-md-3">{{ form.qf4A3 }}</div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2"><b>Responsible</b></div>
+                            <div class="col-md-2"><b>Completed</b></div>
+                            <div class="col-md-2"><b>Not Completed(explain)</b></div>
+                            <div class="col-md-2"><b>New action</b></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">{{ form.qf4A1 }}</div>
+                            <div class="col-md-3">{{ form.qf4A7_rdo }}</div>
+                            <div class="col-md-3">{{ form.qf4A3 }}</div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </fieldset>
+                          
                     
                     <div class="form-group">
-                        <label class="col-md-4 control-label"></label>
+                        <label class="col-md-2 control-label"></label>
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-sm btn-success">Submit Form {{ form_id }} details</button>
                         </div>
-                        <div class="col-md-5"></div>
+                        <div class="col-md-7"></div>
                     </div>
                 </form>
             </div>

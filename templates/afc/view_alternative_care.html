@@ -27,7 +27,7 @@
 <!-- begin breadcrumb -->
 <ol class="breadcrumb pull-right">
 	<li><a href="#">Home</a></li>
-	<li class="active">CTiP</li>
+	<li class="active">Alternative Care</li>
 </ol>
 <!-- end breadcrumb -->
 <!-- begin page-header -->
@@ -79,7 +79,7 @@
                     <a href="{% url 'alt_care_form' cid=cid form_id='3A' case_id=case.case_id|stringformat:'s' %}">
                     <i class="fa fa-file-o fa-1x pull-left fa-fw m-t-4"></i>
                     <span class="badge pull-right">{% if events.3A > 0 %}Y{% else %}N{% endif %}</span>
-                    <div class="m-t-4">F3 - Caregiver Consent</div></a>
+                    <div class="m-t-4">F3 - Consent Forms</div></a>
                 </td>
             </tr>
             <tr>
@@ -139,6 +139,35 @@
                     <div class="m-t-4">F9 : Case closure</div></a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <br><b>Other Forms</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'alt_care_form' cid=cid form_id='10A' case_id=case.case_id|stringformat:'s' %}">
+                    <i class="fa fa-file fa-1x pull-left fa-fw m-t-4"></i>
+                    <span class="badge pull-right">{% if events.10A > 0 %}Y{% else %}N{% endif %}</span>
+                    <div class="m-t-4">Case Transfer Form</div></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'alt_care_form' cid=cid form_id='12A' case_id=case.case_id|stringformat:'s' %}">
+                    <i class="fa fa-file fa-1x pull-left fa-fw m-t-4"></i>
+                    <span class="badge pull-right">{% if events.12A > 0 %}Y{% else %}N{% endif %}</span>
+                    <div class="m-t-4">Referral Form</div></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'alt_care_form' cid=cid form_id='14A' case_id=case.case_id|stringformat:'s' %}">
+                    <i class="fa fa-file fa-1x pull-left fa-fw m-t-4"></i>
+                    <span class="badge pull-right">{% if events.14A > 0 %}Y{% else %}N{% endif %}</span>
+                    <div class="m-t-4">Disability Assessment Form</div></a>
+                </td>
+            </tr>
             
         </table>
         <div class="alert alert-warning">
@@ -174,45 +203,51 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>
+                            <th colspan="3">
                                 <h4>{{ case.person.first_name }} {{ case.person.surname }} <small>DoB: {{ case.person.date_of_birth }} ({{ case.person.age }})</small></h4>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="highlight">
+                        <tr class="highlight" bgcolor="#f2f3f4">
                             <td class="field">Bio Data</td>
-                            <td></td>
+                            <td colspan="3"></td>
                         </tr>
                         <tr class="divider">
-                            <td colspan="2"></td>
+                            <td colspan="4"></td>
                         </tr>
                         <tr>
                             <td class="field">Sex</td>
                             <td>{{ case.person.sex_id|gen_value:vals }}</td>
-                        </tr>
-                        <tr>
                             <td class="field">DoB</td>
                             <td>{{ case.person.date_of_birth }} (Actual / Estimated)</td>
                         </tr>
-                        <tr class="highlight">
+                        <tr class="highlight" bgcolor="#f2f3f4">
                             <td class="field">Case Data</td>
-                            <td></td>
+                            <td colspan="3"></td>
                         </tr>
                         <tr>
                             <td class="field">Care Option</td>
-                            <td>{{ case.care_type|gen_value:vals }}</td>
+                            <td colspan="3">{{ case.care_type|gen_value:vals }}</td>
+                        </tr>
+                        <tr>
+                            <td class="field">Reason(s)</td>
+                            <td colspan="3">
+                                {% for fm in fdatas.AFC_FM_Q1 %}
+                                      {{ forloop.counter}}. {{ fm|gen_value:vals }}<br>
+                                {% endfor %}
+                            </td>
                         </tr>
                         <tr>
                             <td class="field">Date</td>
-                            <td>{{ case.case_date }}</td>
+                            <td colspan="3">{{ case.case_date }}</td>
                         </tr>
                         <tr class="divider">
-                            <td colspan="2"></td>
+                            <td colspan="4"></td>
                         </tr>
                         <tr class="highlight">
                             <td class="field"></td>
-                            <td>
+                            <td colspan="3">
                                 <a href="{% url 'edit_alt_care' case_id=case.case_id|stringformat:'s' %}" class="btn btn-sm btn-primary m-r-5 btnNewcase"><i class="fa fa-pencil m-r-5"></i> Edit Care details</a>
                             </td>
                         </tr>

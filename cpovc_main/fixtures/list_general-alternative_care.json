@@ -198,7 +198,7 @@
             "the_order": 5,
             "user_configurable": "False",
             "field_name": "care_admission_reason_id",
-            "item_id": "ARSE",
+            "item_id": "ARCS",
             "is_void": "False",
             "item_sub_category": "",
             "item_description_short": "Child on the street",

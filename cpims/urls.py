@@ -23,6 +23,8 @@ from django.contrib.auth.views import (
     password_reset_done, password_change, password_change_done)
 from cpovc_auth.views import password_reset
 from django.views.generic import TemplateView
+# For dashboard
+from cpovc_dashboard import urls as dashboard_api_urls
 
 from cpovc_access.forms import StrictPasswordChangeForm
 
@@ -72,6 +74,11 @@ urlpatterns = [
     url(r'^F57665A859FE7CFCDB6C8935196374AD\.txt$',
         TemplateView.as_view(template_name='comodo.txt',
                              content_type='text/plain')),
+    url(r'^d/$', 'cpovc_dashboard.views.ovc_dashboard', name='ovc_dashboard'),
+    url(r'^d/hivstat/', 'cpovc_dashboard.views.ovc_dashboard_hivstat', name='hivstat_dash'),
+    url(r'^d/services/', 'cpovc_dashboard.views.ovc_dashboard_services', name='services_dash'),
+    url(r'^d/cm/', 'cpovc_dashboard.views.ovc_dashboard_cm', name='cm_dash'),
+    url(r'^api/v2/', include(dashboard_api_urls)),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',
                                                content_type='text/plain'))]
 
