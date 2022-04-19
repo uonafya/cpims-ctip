@@ -10,7 +10,8 @@ from cpovc_forms.functions import get_person_ids
 from .models import AFCMain, AFCEvents, AFCForms
 from .forms import (
     AltCareForm, AFCForm1A, AFCForm1B, AFCForm2A, AFCForm4A, AFCForm5A,
-    AFCForm7A, AFCForm8A, AFCForm9A, AFCForm10A, AFCForm12A, AFCForm14A)
+    AFCForm6A, AFCForm7A, AFCForm8A, AFCForm9A, AFCForm10A,
+    AFCForm12A, AFCForm14A)
 from cpovc_registry.models import (
     RegPerson, RegPersonsSiblings, RegPersonsExternalIds, RegPersonsGeo)
 from cpovc_forms.models import OVCCaseRecord, OVCCaseCategory
@@ -272,6 +273,8 @@ def get_form(form_id, initial_data):
             form = AFCForm4A(initial=initial_data)
         elif form_id == '5A':
             form = AFCForm5A(initial=initial_data)
+        elif form_id == '6A':
+            form = AFCForm6A(initial=initial_data)
         elif form_id == '7A':
             form = AFCForm7A(initial=initial_data)
         elif form_id == '8A':

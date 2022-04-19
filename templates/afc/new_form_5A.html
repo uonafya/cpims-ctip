@@ -94,197 +94,212 @@ form#new-form-b ul {
 
                     <div class="form-group">
                         <label class="col-md-4 control-label">Place where process is being conducted</label>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2">{{ form.qf5A1 }}</div>
                         <label class="col-md-2 control-label">Authorizing person</label>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-3">{{ form.qf5A2 }}</div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Legal status of current care (committed).</label>
                         <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                            {{ form.qf5A3_rdo }}
+                            <span id="qf5A3_rdo_error"></span>
                         </div>
-                        <label class="col-md-2 control-label">Committial Revoked</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-2"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Committal Expired</label>
                         <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Reason why this care is the most appropriate care alternative</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                            {{ form.qf5A4_rdo }}
+                            <span id="qf5A4_rdo_error"></span>
                         </div>
                         <label class="col-md-2 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Specify the resources or assistance to be offered to the child/young adult</label>
+                        <label class="col-md-4 control-label">Committal Revoked</label>
                         <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label">Responsible person</label>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Review Date</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                            {{ form.qf5A5_rdo }}
+                            <span id="qf5A5_rdo_error"></span>
                         </div>
                         <label class="col-md-2 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
-
+                    
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">Reasons</label>
+                        <div class="col-md-11">
+                            <table class="table">
+                                <thead>
+                                    <tr><th>#</th><th>Reason why this care is the most appropriate care alternative</th>
+                                        <th>Specify the resources or assistance to be offered to the child/young adult</th>
+                                        <th>Responsible person</th></tr>
+                                </thead>                                    
+                                    <tr><td colspan="3">No reasons specified</td></tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
                     <!-- End kafaalah -->
+                    {% if cid == 'KS' %}
 
                     <!-- Start Kinship -->
-                    
-
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Name of caregiver giving authority of care to kinship</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-12"><b>Name of parent/former caregiver giving authority of care</b></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Details of kinship parents receiving the child</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr><th></th>
+                                        <th>Names</th>
+                                        <th>Contact</th>
+                                        <th>County</th>
+                                        <th>Sub-county</th>
+                                    </tr>
+                                </thead>                                    
+                                <tbody>
+                                    <tr>
+                                        <td>Father</td>
+                                        <td>{{ form.qf5A8A }}</td>
+                                        <td>{{ form.qf5A8B }}</td>
+                                        <td>{{ form.qf5A8C }}</td>
+                                        <td>{{ form.qf5A8D }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mother</td>
+                                        <td>{{ form.qf5A9A }}</td>
+                                        <td>{{ form.qf5A9B }}</td>
+                                        <td>{{ form.qf5A9C }}</td>
+                                        <td>{{ form.qf5A9D }}</td>
+                                    </tr>                                   
+                                </tbody>
+                            </table>
                         </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Contact details</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label">County</label>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-12"><b>Details of kinship parents receiving the child</b></div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr><th></th>
+                                        <th>Names</th>
+                                        <th>Contact</th>
+                                        <th>County</th>
+                                        <th>Sub-county</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Father</td>
+                                        <td>{{ form.qf5A10A }}</td>
+                                        <td>{{ form.qf5A10B }}</td>
+                                        <td>{{ form.qf5A10C }}</td>
+                                        <td>{{ form.qf5A10D }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mother</td>
+                                        <td>{{ form.qf5A11A }}</td>
+                                        <td>{{ form.qf5A11B }}</td>
+                                        <td>{{ form.qf5A11C }}</td>
+                                        <td>{{ form.qf5A11D }}</td>
+                                    </tr>                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
 
                     <div class="form-group">
                         <label class="col-md-4 control-label">Is the child leaving a CCI? </label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                        <div class="col-md-3">
+                            {{ form.qf5A12A_rdo }}
+                            <span id="qf5A12A_rdo_error"></span>
                         </div>
-                        <label class="col-md-2 control-label">CCI name</label>
+                        <label class="col-md-1 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label">CCI contact</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
+                        <label class="col-md-4 control-label">CCI name</label>
+                        <div class="col-md-3">{{ form.qf5A12B }}</div>
+                        <label class="col-md-1 control-label">CCI contact</label>
+                        <div class="col-md-3">{{ form.qf5A12C }}</div>
                         <div class="col-md-1"></div>
                     </div>
+                    <!-- End Kinship -->
 
-                    <!-- SIL Start -->
+                    <!-- Start SIL -->
                     <div class="form-group">
                         <label class="col-md-4 control-label">If not in CCI, choose the type of current care</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-3">{{ form.qf5A13_sdd}}</div>
+                        <label class="col-md-1 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Persons responsible in supporting the young adult have reviewed the case plan and agree to their respective roles contained within the case plans</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                        <div class="col-md-3">
+                            {{ form.qf5A14_rdo }}
+                            <span id="qf5A14_rdo_error"></span>
                         </div>
-                        <label class="col-md-2 control-label"></label>
+                        <label class="col-md-1 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Mentor names</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label">Contact</label>
+                        <div class="col-md-3">{{ form.qf5A15A }}</div>
+                        <label class="col-md-1 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Gender</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
-                        </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-3">{{ form.qf5A15B_sdd }}</div>
+                        <label class="col-md-1 control-label">Contact</label>
+                        <div class="col-md-3">{{ form.qf5A15C }}</div>
                         <div class="col-md-1"></div>
                     </div>
+                    <!-- End SIL -->
+
                     <!-- Start SCHH -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label">HH Location</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
+                        <label class="col-md-4 control-label">Child's household's Location</label>
+                        <div class="col-md-3">
+                            {{ form.qf5A16 }}
                             <span id="qf2A1_rdo_error"></span>
                         </div>
-                        <label class="col-md-2 control-label"></label>
+                        <label class="col-md-1 control-label"></label>
                         <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label">Reasons for placing child(ren)/young adult under this care (tick all that apply):</label>
-                        <div class="col-md-2">
-                            {{ form.qf5A1_rdo }}
-                            <span id="qf2A1_rdo_error"></span>
+                        <div class="col-md-7">
+                            {{ form.qf5A17 }}
+                            <span id="qf5A8_error"></span>
                         </div>
-                        <label class="col-md-2 control-label"></label>
-                        <div class="col-md-3"></div>
                         <div class="col-md-1"></div>
                     </div>
                     
-                    
                     <div class="form-group">
                         <label class="col-md-4 control-label">Placement Date</label>
-                        <div class="col-md-2">
-                            {{ form.event_date }}
-                        </div>
-                        <div class="col-md-4"></div>
+                        <div class="col-md-3">{{ form.event_date }}</div>
+                        <label class="col-md-1 control-label">Review Date</label>
+                        <div class="col-md-3">{{ form.qf5A7 }}</div>
+                        <div class="col-md-1"></div>
                     </div>
                     
                     
@@ -310,7 +325,7 @@ form#new-form-b ul {
 
 <script>
 $(document).ready(function() {
-    $('#consent_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
+    $('#event_date, .event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
 });
 
 </script>

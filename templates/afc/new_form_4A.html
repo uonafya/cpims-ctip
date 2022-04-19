@@ -94,23 +94,21 @@ form#new-form-b ul {
                     {% if cid == 'CA' %}
                     <!-- Adoption -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Matching done(Y/N) {{ cid }}</label>
-                        <div class="col-md-2">
+                        <label class="col-md-3 control-label">Matching done(Y/N) {{ cid }}</label>
+                        <div class="col-md-3">
                             {{ form.qf4A1_rdo }}
                             <span id="qf4A1_rdo_error"></span>
                         </div>
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-5"></div>
                         <div class="col-md-1"></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Children placed for bonding (Y/N)</label>
-                        <div class="col-md-2">
+                        <label class="col-md-3 control-label">Children placed for bonding (Y/N)</label>
+                        <div class="col-md-3">
                             {{ form.qf4A1_rdo }}
                             <span id="qf4A1_rdo_error"></span>
                         </div>
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-5"></div>
                         <div class="col-md-1"></div>
                     </div>
 
@@ -132,50 +130,72 @@ form#new-form-b ul {
                         <legend class="pull-left width-full">Goals By Domain</legend>
 
                         <div class="form-group">
-                        <label class="col-md-2 control-label">Case Plan Date</label>
-                        <div class="col-md-2">
-                            {{ form.event_date }}
+                            <label class="col-md-3 control-label">Case Plan Date</label>
+                            <div class="col-md-3">{{ form.event_date }}</div>
+                            <div class="col-md-6"></div>
                         </div>
-                        <div class="col-md-4"></div>
-                    </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Domain</label>
+                            <div class="col-md-3">{{ form.qf4A1 }}</div>
+                            <div class="col-md-6"></div>
+                        </div>
 
                         <div class="form-group">
-                            <div class="col-md-2"><b>Domain</b></div>
                             <div class="col-md-3"><b>Goals</b></div>
                             <div class="col-md-3"><b>Needs</b></div>
-                            <div class="col-md-2"><b>Proposed actions</b></div>
-                            <div class="col-md-2"><b>Deadline</b></div>
+                            <div class="col-md-3"><b>Proposed actions</b></div>
+                            <div class="col-md-3"><b>Deadline</b></div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2">{{ form.qf4A1 }}</div>
                             <div class="col-md-3">{{ form.qf4A2 }}</div>
                             <div class="col-md-3">{{ form.qf4A3 }}</div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-3">{{ form.qf4A4 }}</div>
+                            <div class="col-md-3">{{ form.qf4A5 }}</div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2"><b>Responsible</b></div>
+                            <div class="col-md-3"><b>Responsible</b></div>
                             <div class="col-md-2"><b>Completed</b></div>
-                            <div class="col-md-2"><b>Not Completed(explain)</b></div>
-                            <div class="col-md-2"><b>New action</b></div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-4"><b>Not Completed(explain)</b></div>
+                            <div class="col-md-3"><b>New action identified</b></div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2">{{ form.qf4A1 }}</div>
-                            <div class="col-md-3">{{ form.qf4A7_rdo }}</div>
-                            <div class="col-md-3">{{ form.qf4A3 }}</div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-3">{{ form.qf4A6 }}</div>
+                            <div class="col-md-2">{{ form.qf4A7_rdo }}<br><span id="qf4A7_rdo_error"></span></div>
+                            <div class="col-md-4">{{ form.qf4A8_txt }}</div>
+                            <div class="col-md-3">{{ form.qf4A9 }}</div>
                         </div>
                     </fieldset>
-                          
+                  
                     
                     <div class="form-group">
-                        <label class="col-md-2 control-label"></label>
+                        <label class="col-md-3 control-label"></label>
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-sm btn-success">Submit Form {{ form_id }} details</button>
                         </div>
-                        <div class="col-md-7"></div>
+                        <div class="col-md-6"></div>
+                    </div>
+
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-condensed slimtable" id="submissions_table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Goal</th>
+                                    <th>Needs/Gaps</th>
+                                    <th>Priority Actions</th>
+                                    <th>Services</th>
+                                    <th>Responsible</th>
+                                    <th>Completed</th>
+                                    <th>Results</th>
+                                    <th>Reasons</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
                     </div>
                 </form>
             </div>
@@ -191,7 +211,7 @@ form#new-form-b ul {
 
 <script>
 $(document).ready(function() {
-    $('#event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
+    $('#event_date, .event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
 });
 
 </script>

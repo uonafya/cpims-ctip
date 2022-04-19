@@ -9,6 +9,7 @@
 {% block style_code %}
 <link href="{% static 'plugins/parsley/src/parsley.css' %}" rel="stylesheet" />
 <link href="{% static 'plugins/bootstrap-datepicker/css/datepicker3.css' %}" rel="stylesheet" />
+<link href="{% static 'plugins/bootstrap-wizard/css/bwizard.min.css' %}" rel="stylesheet" />
 <style type="text/css">
 form#new-form-b ul {
       list-style-type: none;
@@ -94,154 +95,135 @@ form#new-form-b ul {
                     <div class="form-group">
                         <label class="col-md-2 control-label">Number of visit</label>
                         <div class="col-md-2">
-                            {{ form.event_date }}
+                            {{ form.qf6A1_txt }}
                         </div>
                         <div class="col-md-4">
                         </div>
                     </div>
 
-                    <fieldset>
-                        <legend>A. CHILD’S WELL-BEING AND PROGRESS</legend>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Since our last visit, is there anything that you would like to share with me? Please describe below</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Any major changes in your life? Please describe below (Hint: Look for both positive and negative changes.)</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">How have these changes affected you (e.g., how is the child currently coping)?</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <p>Caseworker comments on the child’s overall well-being and progress made toward reintegration</p>
+                    <div id="wizard">
+                        <ol>
+                            <li>
+                                A. CHILD'S WELL-BEING AND PROGRESS
+                                <small>Child's well-being and progress.</small>
+                            </li>
+                            <li>
+                                A.&nbsp;FAMILY'S WELL-BEING AND PROGRESS
+                                <small>Famil's well-being and progress.</small>
+                            </li>
+                        </ol>
+                        <!-- begin wizard step-1 -->
+                        <div>
+                            <fieldset>
+                                <legend>A. CHILD'S WELL-BEING AND PROGRESS</legend>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Since our last visit, is there anything that you would like to share with me? Please describe</label>
+                                    <div class="col-md-6">{{ form.qf6A2_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Any major changes in your life? Please describe below <small>(Hint: Look for both positive and negative changes.)</small></label>
+                                    <div class="col-md-6">{{ form.qf6A3_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">How have these changes affected you (e.g., how is the child currently coping)?</label>
+                                    <div class="col-md-6">{{ form.qf6A4_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <p><b>Caseworker comments on the child’s overall well-being and progress made toward reintegration</b></p>
+                                <hr>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Health and development</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Health and development</label>
+                                    <div class="col-md-7">{{ form.qf6A5_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Psychosocial health and emotional well-being</label>
+                                    <div class="col-md-7">{{ form.qf6A6_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Education</label>
+                                    <div class="col-md-7">{{ form.qf6A7_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Protection and safety</label>
+                                    <div class="col-md-7">{{ form.qf6A8_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Child–caregiver/young adult–mentor relationship and attachment</label>
+                                    <div class="col-md-7">{{ form.qf6A9_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Social well-being and community belonging</label>
+                                    <div class="col-md-7">{{ form.qf6A10_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                            </fieldset>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Psychosocial health and emotional well-being</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Education</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Protection and safety</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Child–caregiver/young adult–mentor relationship and attachment</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Social well-being and community belonging</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                    </fieldset>
+                        <div>
+                            <fieldset>
+                                <legend>B. FAMILY'S WELL-BEING AND PROGRESS</legend>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Since our last visit, is there anything that you would like to share with me? Please describe below</label>
+                                    <div class="col-md-6">{{ form.qf6A11_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Any major changes in your life? Please describe below (Hint: Look for both positive and negative changes.)</label>
+                                    <div class="col-md-6">{{ form.qf6A12_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">How have these changes affected your family/life</label>
+                                    <div class="col-md-6">{{ form.qf6A13_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <p>Caseworker comments on the child’s overall well-being and progress made toward reintegration</p>
 
-                    <fieldset>
-                        <legend>B. FAMILY’S WELL-BEING AND PROGRESS</legend>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Since our last visit, is there anything that you would like to share with me? Please describe below</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Health and development</label>
+                                    <div class="col-md-7">{{ form.qf6A14_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Psychosocial health and emotional well-being</label>
+                                    <div class="col-md-7">{{ form.qf6A15_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Education</label>
+                                    <div class="col-md-7">{{ form.qf6A16_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Protection and safety</label>
+                                    <div class="col-md-7">{{ form.qf6A17_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Child–caregiver/young adult–mentor relationship and attachment</label>
+                                    <div class="col-md-7">{{ form.qf6A18_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Social well-being and community belonging</label>
+                                    <div class="col-md-7">{{ form.qf6A19_txt }}</div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                            </fieldset>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Any major changes in your life? Please describe below (Hint: Look for both positive and negative changes.)</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">How have these changes affected your family/life</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <p>Caseworker comments on the child’s overall well-being and progress made toward reintegration</p>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Health and development</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Psychosocial health and emotional well-being</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Education</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Protection and safety</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Child–caregiver/young adult–mentor relationship and attachment</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Social well-being and community belonging</label>
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                    </fieldset>
+                    </div>
                     
                     <div class="form-group">
                         <label class="col-md-4 control-label">Proposed date of next monitoring visit</label>
                         <div class="col-md-2">
-                            {{ form.event_date }}
+                            {{ form.qf6A20_txt }}
                         </div>
                         <div class="col-md-4">
                         </div>
@@ -275,9 +257,13 @@ form#new-form-b ul {
 {% block lazy_javascript_code %}
 
 
+<script src="{% static 'plugins/bootstrap-wizard/js/bwizard.js' %}"></script>
 <script>
+
 $(document).ready(function() {
-    $('#consent_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
+    $('#event_date, .event_date').datepicker({ endDate: '0y', format: 'dd-M-yyyy' });
+
+    $("#wizard").bwizard();
 });
 
 </script>
